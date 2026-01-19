@@ -52,6 +52,8 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ./install.sh
 ```
 
+## Post-Installation Setup
+
 ### Zsh Plugins
 The first time you start zsh, zinit will automatically install all plugins including:
 - Powerlevel10k theme
@@ -66,6 +68,13 @@ The first time you start zsh, zinit will automatically install all plugins inclu
 - Powerlevel10k theme with custom configuration
 - Enhanced completions and syntax highlighting
 - fzf integration for fuzzy finding
+
+### Tmux Plugin Manager & Catppuccin Theme
+After installation, start tmux and install plugins:
+```bash
+tmux
+# Press Ctrl-a + I to install plugins (including Catppuccin theme)
+```
 
 ### Additional Tools
 - **fzf**: Fuzzy finder with custom keybindings and preview

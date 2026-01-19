@@ -37,5 +37,15 @@ ln -sf "$SCRIPT_DIR/zsh/.zshrc" ~/.zshrc
 ln -sf "$SCRIPT_DIR/zsh/.p10k.zsh" ~/.p10k.zsh
 echo "✓ Zsh config linked"
 
+# Tmux
+echo "Setting up tmux configuration..."
+if [ -f ~/.config/tmux/tmux.conf ]; then
+    echo "Backing up existing tmux config..."
+    cp ~/.config/tmux/tmux.conf ~/.config/tmux/tmux.conf.backup.$(date +%Y%m%d_%H%M%S)
+fi
+mkdir -p ~/.config/tmux
+ln -sf "$SCRIPT_DIR/tmux/tmux.conf" ~/.config/tmux/tmux.conf
+echo "✓ Tmux config linked"
+
 echo "Dotfiles installation complete!"
 
