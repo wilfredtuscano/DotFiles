@@ -1,0 +1,22 @@
+# Machine-specific zsh configuration template
+# Copy this file to ~/.zshrc.local and customize for your machine
+# This file should NOT be committed to version control
+
+# Example: Machine-specific PATH additions
+# export PATH="$HOME/custom/bin:$PATH"
+
+# Example: Machine-specific aliases
+# alias ll="ls -la"
+
+# Example: Work-specific configuration
+# export WORK_VAR="value"
+# alias work-command="some-command"
+
+# Example: Different homebrew paths for different architectures
+# Intel Mac: eval "$(/usr/local/bin/brew shellenv)"
+# Apple Silicon Mac: eval "$(/opt/homebrew/bin/brew shellenv)"
+# Linux: # No homebrew typically
+
+# Example: Cloud desktop specific settings
+# export DISPLAY=:0
+
