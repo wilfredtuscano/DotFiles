@@ -47,5 +47,13 @@ mkdir -p ~/.config/tmux
 ln -sf "$SCRIPT_DIR/tmux/tmux.conf" ~/.config/tmux/tmux.conf
 echo "✓ Tmux config linked"
 
+# Neovim
+if [ -d ~/.config/nvim ]; then
+    echo "Backing up existing nvim config..."
+    mv ~/.config/nvim ~/.config/nvim.backup.$(date +%Y%m%d_%H%M%S)
+fi
+ln -sf "$SCRIPT_DIR/nvim" ~/.config/nvim
+echo "✓ Neovim config linked"
+
 echo "Dotfiles installation complete!"
 
