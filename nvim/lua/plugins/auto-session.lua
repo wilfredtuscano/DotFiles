@@ -3,24 +3,17 @@ return {
   config = function()
     require("auto-session").setup {
       log_level = "error",
-      auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-      auto_session_use_git_branch = false,
+      suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      use_git_branch = false,
 
-      auto_save_enabled = true,
-      auto_restore_enabled = true,
-      auto_session_enabled = true,
-
-      -- Session lens integration
-      session_lens = {
-        load_on_setup = true,
-        theme_conf = { border = true },
-        previewer = false,
-      },
+      auto_save = true,
+      auto_restore = false,
+      enabled = true,
     }
 
     -- Keymaps
-    vim.keymap.set("n", "<leader>wr", "<cmd>AutoSession restore<CR>", { desc = "Restore session" })
+    vim.keymap.set("n", "<leader>wr", "<cmd>AutoSession search<CR>", { desc = "Find session" })
+    vim.keymap.set("n", "<leader>wR", "<cmd>AutoSession restore<CR>", { desc = "Restore last session" })
     vim.keymap.set("n", "<leader>ws", "<cmd>AutoSession save<CR>", { desc = "Save session" })
   end,
 }
-

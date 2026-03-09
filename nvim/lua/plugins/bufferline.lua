@@ -26,9 +26,18 @@ return {
     -- Keymaps
     vim.keymap.set('n', '<Tab>', '<Cmd>BufferLineCycleNext<CR>', { desc = "Next buffer" })
     vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = "Previous buffer" })
-    vim.keymap.set('n', '<leader>bd', '<Cmd>bdelete<CR>', { desc = "Delete buffer" })
-    vim.keymap.set('n', '<leader>bD', '<Cmd>%bdelete|edit#|bdelete#<CR>', { desc = "Delete all buffers" })
+    vim.keymap.set('n', '<leader>bd', function()
+      local buf = vim.api.nvim_get_current_buf()
+      vim.cmd('BufferLineCyclePrev')
+      vim.api.nvim_buf_delete(buf, {})
+    end, { desc = "Delete buffer" })
+    vim.keymap.set('n', '<leader>bD', function()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted then
+          vim.api.nvim_buf_delete(buf, {})
+        end
+      end
+    end, { desc = "Delete all buffers" })
     vim.keymap.set('n', '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', { desc = "Pin buffer" })
   end,
 }
-
