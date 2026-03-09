@@ -10,6 +10,7 @@ return {
     config = function()
         -- Clear any existing Neo-tree buffers on startup
         vim.api.nvim_create_autocmd("VimEnter", {
+            group = vim.api.nvim_create_augroup("NeoTreeCleanup", { clear = true }),
             callback = function()
                 for _, buf in ipairs(vim.api.nvim_list_bufs()) do
                     local name = vim.api.nvim_buf_get_name(buf)
