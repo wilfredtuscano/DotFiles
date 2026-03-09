@@ -82,7 +82,13 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # Aliases
-alias ls='ls --color'
+if command -v eza >/dev/null 2>&1; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -la --icons --group-directories-first --git'
+    alias lt='eza --tree --icons --level=2'
+else
+    alias ls='ls --color=auto'
+fi
 
 # Load powerlevel10k config if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
