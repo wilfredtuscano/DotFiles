@@ -17,41 +17,39 @@ opt.hlsearch = true
 -- Indentation (default for most languages)
 opt.tabstop = 4
 opt.shiftwidth = 4
-opt.expandtab = false
+opt.expandtab = true
 opt.autoindent = true
 opt.smartindent = true
 
--- UI (commented - uncomment as needed)
--- opt.scrolloff = 8
--- opt.sidescrolloff = 8
+-- UI
+opt.termguicolors = true
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+opt.signcolumn = "yes"
+opt.cursorline = true
 -- opt.wrap = false
--- opt.cursorline = true
--- opt.signcolumn = "yes"
 -- opt.colorcolumn = "80"
 
--- Splits (commented - uncomment as needed)
--- opt.splitbelow = true
--- opt.splitright = true
+-- Splits
+opt.splitbelow = true
+opt.splitright = true
 
--- Clipboard (commented - uncomment as needed)
--- opt.clipboard = "unnamedplus"
+-- Clipboard
+opt.clipboard = "unnamedplus"
 
--- Mouse (commented - uncomment as needed)
--- opt.mouse = "a"
+-- Mouse
+opt.mouse = "a"
 
--- Performance (commented - uncomment as needed)
--- opt.updatetime = 250
--- opt.timeoutlen = 300
+-- Performance
+opt.updatetime = 250
+opt.timeoutlen = 300
 
--- Backup and swap (commented - uncomment as needed)
--- opt.backup = false
--- opt.writebackup = false
--- opt.swapfile = false
--- opt.undofile = true
+-- Backup and swap (git + auto-session handle recovery)
+opt.backup = false
+opt.writebackup = false
+opt.swapfile = false
+opt.undofile = true
+opt.undodir = os.getenv("HOME") .. "/.undodir"
 
--- Completion (commented - uncomment as needed)
--- opt.completeopt = "menu,menuone,noselect"
-
--- Terminal colors (commented - uncomment as needed)
--- opt.termguicolors = true
-
+-- Completion
+opt.completeopt = "menu,menuone,noselect"
