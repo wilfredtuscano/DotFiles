@@ -1,5 +1,6 @@
-# Machine-specific zsh configuration template
-# Copy this file to ~/.zshrc.local and customize for your machine
+# Machine-specific zsh post-configuration template
+# Copy this file to ~/.zshrc.local.post and customize for your machine
+# This file is sourced AFTER all zsh setup (plugins, completions, aliases, etc.)
 # This file should NOT be committed to version control
 
 # Example: Machine-specific PATH additions
@@ -17,6 +18,5 @@
 # Apple Silicon Mac: eval "$(/opt/homebrew/bin/brew shellenv)"
 # Linux: # No homebrew typically
 
-# Example: Cloud desktop specific settings
+# Example: remote or headless machine settings
 # export DISPLAY=:0
-

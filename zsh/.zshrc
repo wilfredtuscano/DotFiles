@@ -1,3 +1,8 @@
+# Source machine-specific PRE config if it exists (not version controlled).
+# Must come before the p10k instant prompt block: anything that writes to the console after
+# that block triggers p10k's "console output during zsh initialization" warning.
+[[ -f ~/.zshrc.local.pre ]] && source ~/.zshrc.local.pre
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,15 +10,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Source machine-specific config if it exists (not version controlled)
-# This should be last to allow overriding any settings above
-[[ -f ~/.zshrc.local.pre ]] && source ~/.zshrc.local.pre
-
 # Machine-specific initialization (homebrew, etc.)
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+# User-local binaries. Guarded so a missing directory is skipped cleanly.
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Zinit installation and setup
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -73,7 +77,6 @@ export FZF_CTRL_R_OPTS="--exact --preview 'echo {}' --preview-window down:3:hidd
 # Initialize fzf if available
 if command -v fzf >/dev/null 2>&1; then
     eval "$(fzf --zsh)"
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fi
 
 # Initialize zoxide if available
@@ -93,7 +96,7 @@ fi
 # Load powerlevel10k config if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Source machine-specific config if it exists (not version controlled)
-# This should be last to allow overriding any settings above
+# Source machine-specific POST config if it exists (not version controlled).
+# Last on purpose, so it can override anything set above.
 [[ -f ~/.zshrc.local.post ]] && source ~/.zshrc.local.post
 

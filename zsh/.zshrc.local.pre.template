@@ -1,0 +1,4 @@
+# Machine-specific zsh pre-configuration template
+# Copy this file to ~/.zshrc.local.pre and customize for your machine
+# This file is sourced BEFORE most zsh setup (plugins, completions, etc.)
+# This file should NOT be committed to version control
