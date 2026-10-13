@@ -2,6 +2,12 @@ return {
   "lewis6991/gitsigns.nvim",
   event = { "BufReadPre", "BufNewFile" },
   opts = {
+    -- Passed straight to nvim_open_win. There is no border by default, which left the hunk
+    -- preview looking flat next to K's hover and the diagnostic float, both of which set
+    -- border = "rounded" in lsp-config.lua.
+    preview_config = {
+      border = "rounded",
+    },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
 
