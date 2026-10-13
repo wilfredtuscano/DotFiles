@@ -13,4 +13,3 @@ return {
     { "<leader>tt", "<cmd>Trouble todo toggle<CR>", desc = "Open todos in trouble" },
   },
 }
-

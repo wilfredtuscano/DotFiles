@@ -49,4 +49,3 @@ keymap.set({ "n", "i", "v" }, "<C-s>", "<cmd>wa<CR>", { desc = "Save all files" 
 -- keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
 -- keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split horizontally" })
 -- keymap.set("n", "<leader>sc", ":close<CR>", { desc = "Close split" })
-

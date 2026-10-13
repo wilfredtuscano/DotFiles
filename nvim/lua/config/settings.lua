@@ -9,4 +9,3 @@ vim.g.maplocalleader = " "
 -- Other global settings can go here
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
-
