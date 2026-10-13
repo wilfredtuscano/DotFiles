@@ -2,6 +2,8 @@
 require("config.settings")
 require("config.options")
 require("config.keymaps")
+require("config.autocmds")
+require("config.ts-selection")
 
 -- Bootstrap lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -20,7 +22,4 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {}
-
 require("lazy").setup("plugins")
-
