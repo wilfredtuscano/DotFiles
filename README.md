@@ -4,45 +4,48 @@ Personal dotfiles configuration for zsh, nvim, and tmux with comprehensive devel
 
 ## Prerequisites
 
-Install the following tools before running the install script:
+`Brewfile` is the source of truth; this list is the reasoning behind it.
 
-**Core Tools:**
-- **zsh** - Shell
-- **fzf** - Fuzzy finder (0.65.0+)
-- **zoxide** - Smart cd replacement
-- **tmux** - Terminal multiplexer
-- **nvim** - Neovim editor (v0.11+)
-- **node / npm** - Required for JS/TS/HTML/CSS LSP servers and formatters
-- **bat** - Better cat (for fzf preview)
-- **git** - Version control
-- **jq** - JSON processor
-- **curl** - HTTP client
-- **pandoc** - Document converter
+**Required:**
+- **zsh** shell
+- **neovim** v0.12+. Not 0.11: nvim-treesitter's `main` branch requires 0.12 or later, and
+  `master` does not support 0.12 at all. See the Treesitter notes in `CLAUDE.md`.
+- **tree-sitter-cli** 0.26.1+, via a package manager, not npm. The treesitter rewrite compiles
+  parsers through `tree-sitter build` rather than calling cc, so without this every parser
+  install fails with ENOENT.
+- **ripgrep** required by telescope `live_grep`
+- **fd** required by telescope `find_files`
+- **node / npm** JS and TS language servers and formatters
+- **git**, **curl**
 
-**Amazon Internal (Optional):**
-- **mwinit** - Amazon authentication
-- **brazil** - Amazon build system
-- **cr** - Code review CLI
-- **code-search** - Amazon code search tool
+**Expected by the config:**
+- **fzf** (0.65.0+) history search and fzf-tab
+- **zoxide** smart cd
+- **tmux** terminal multiplexer. TPM installs itself from `tmux.conf`
+- **bat** fzf previews
+- **eza** modern ls, aliased in `.zshrc`
+- **stylua** Lua formatter, run on save by conform
+- **lazygit** git TUI, opened from nvim with `<leader>gg`
+- **jq**, **tldr**
 
-### macOS (Homebrew)
+**Optional:**
+- A JDK, if you want Java or Kotlin. Temurin is what this machine uses; brew's `openjdk` is
+  deliberately absent from the Brewfile so it does not install a parallel set.
+- A Nerd Font. `font-caskaydia-cove-nerd-font` is in the Brewfile; set your terminal to the
+  **Mono** variant, `CaskaydiaCoveNFM`, since the non-Mono build has double-width glyphs that
+  break column alignment.
+
+### Install the prerequisites (macOS)
 ```bash
-brew install zsh fzf zoxide tmux neovim node bat git jq curl pandoc
+# everything above, from the manifest
+brew bundle --file=Brewfile
+
+# or, to see what is missing without changing anything
+brew bundle check --file=Brewfile
 ```
 
-### Linux (Ubuntu/Debian)
-```bash
-sudo apt update
-sudo apt install zsh fzf tmux neovim bat git jq curl pandoc nodejs npm
-# Install zoxide separately
-curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
-```
-
-#### NOTE: Use git repo with PATH export if fzf version is lower than recommended
-```bash
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
-```
+Note that `brew bundle install` also upgrades anything outdated as a side effect, so on an
+established machine prefer `check` and upgrade deliberately.
 
 ## Installation
 
@@ -118,6 +121,12 @@ Leader key: `<Space>`
 | Keys | Mode | Description |
 |------|------|-------------|
 | `<C-s>` | n, i, v | Save all files |
+| `<C-/>` | n, t | Toggle floating terminal (toggleterm) |
+
+Inside the floating terminal, `<Esc><Esc>` (twice, not once) leaves insert mode so you can
+scroll, yank and search the scrollback; `i` or `a` returns to the prompt. A single `<Esc>` is
+left alone deliberately: it is fzf's cancel key inside the shell, which Ctrl-R history and
+fzf-tab both rely on. Hiding the terminal keeps the shell running; `exit` closes it for real.
 
 ### LSP (active on buffers with an attached LSP server)
 
@@ -226,6 +235,7 @@ Leader key: `<Space>`
 | `<leader>gc` | n | Close Diffview |
 | `<leader>gm` | n | Compare with previous commit |
 | `<leader>gv` | n | 3-way merge conflict view |
+| `<leader>gg` | n | LazyGit, scoped to the current file's repo |
 
 ### Trouble — `<leader>t`
 
@@ -256,14 +266,20 @@ Leader key: `<Space>`
 | Keys | Mode | Description |
 |------|------|-------------|
 | `<leader>mp` | n, v | Format file or range |
+| `<leader>mdt` | n | Toggle rendered markdown |
+| `<leader>mds` | n | Markdown side by side, raw and rendered |
 
 ### Selection / Treesitter — `<leader>s`
 
 | Keys | Mode | Description |
 |------|------|-------------|
-| `<leader>ss` | n | Start incremental selection |
-| `<leader>si` | n | Expand to next node |
-| `<leader>sd` | n | Shrink to previous node |
+| `<leader>ss` | n, x | Select the smallest node under the cursor |
+| `<leader>si` | n, x | Grow to the next enclosing node |
+| `<leader>sd` | n, x | Shrink back one step |
+
+Implemented locally in `nvim/lua/config/ts-selection.lua`, not by a plugin: nvim-treesitter's
+`main` rewrite removed its incremental_selection module with no replacement. Any edit to the
+buffer invalidates the selection stack, so start again with `<leader>ss`.
 
 ### LeetCode — `<leader>L`
 
@@ -275,3 +291,11 @@ Leader key: `<Space>`
 | `<leader>Ls` | n | Submit solution |
 | `<leader>Lr` | n | Run solution |
 | `<leader>Li` | n | Problem info |
+| `<leader>Ld` | n | Toggle the problem description pane |
+| `<leader>Ln` | n | Start the next numbered solution |
+
+Solutions are written to `~/hq/growth/leetcode/problems/<3-digit-id>-<slug>/NN-<slug>.kt`.
+`<leader>Ln` saves the current attempt and opens the next number with the same contents, so
+earlier approaches are kept rather than overwritten. **Do not rename a solution file**: the
+plugin finds the latest attempt by matching the exact `NN-<slug>.<ext>` shape, so a renamed
+file restarts the counter and the next attempt overwrites the previous one.
