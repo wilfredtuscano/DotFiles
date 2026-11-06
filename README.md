@@ -88,6 +88,18 @@ On first launch, lazy.nvim will automatically install all plugins and Mason will
 - Catppuccin theme
 - Prefix key: `Ctrl-a`
 - vim-tmux-navigator for seamless pane/window navigation with Neovim
+- Claude Code agent state on window tabs: 󰔟 working, 󰂞 waiting for you, 󰄬 done.
+  `tmux.conf` only renders the window option `@claude_state`; Claude Code hooks set it, and those
+  live in `~/.claude/settings.json`, outside this repo. Each hook runs
+  `[ -n "$TMUX_PANE" ] && tmux set -wq -t "$TMUX_PANE" @claude_state <state>; exit 0`
+  (async), with `set -wqu` to clear:
+
+  | Hook event | State |
+  |---|---|
+  | `UserPromptSubmit`, `PreToolUse` | `working` |
+  | `Notification`, matcher `permission_prompt\|elicitation_dialog` | `waiting` |
+  | `Stop` | `done` |
+  | `SessionStart`, `SessionEnd` | cleared |
 
 ### Neovim
 
